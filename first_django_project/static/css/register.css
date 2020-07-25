@@ -1,0 +1,203 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	font-size: 14px;
+	border: 0;
+}
+body{
+	background-color:#F2F2F2; 
+}
+.register{
+	margin-top: 130px;
+	text-align: center;
+	position: relative;
+}
+input{
+	outline: medium;
+}
+.text1{
+	font-size: 26px;
+}
+.text2{
+	padding-top: 10px;
+	padding-bottom: 20px;
+	color: #9999A2;
+	font-size: 14px;
+}
+.checkbox{	
+	width: 17px;
+	height: 17px;
+	background: #30A89D;
+	position: relative;
+	left: -113px;
+	top: 2px;
+}
+.phone{
+	width: 295px;
+	height: 37px;
+	border-right: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	border-left: 0.2px solid #FFF;
+	font-size: 14px;
+	vertical-align:middle;
+}
+.password{
+	width: 295px;
+	height: 37px;
+	border-right: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	border-left: 0.2px solid #FFF;
+	font-size: 14px;
+	vertical-align:middle;
+}
+.repassword{
+	width: 295px;
+	height: 37px;
+	border-right: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	border-left: 0.2px solid #FFF;
+	font-size: 14px;
+	vertical-align:middle;
+}
+.name{
+	width: 295px;
+	height: 37px;
+	border-right: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	border-left: 0.2px solid #FFF;
+	font-size: 14px;
+	vertical-align:middle;
+}
+.submit{
+	width: 335px;
+	height: 40px;
+	background: #009688;
+	border: none;
+	color: #FFFFFF;
+	cursor: pointer;
+	border-radius: 2px;
+	margin-top: 10px;
+}
+.a1{
+	text-decoration: none;
+	color: #666666;
+	font-size: 15px;
+	position: relative;
+	left: -95px;
+	top: -1px;
+}
+
+.label1{
+	display: inline-block; 
+	position: relative;
+	border-left: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	width: 37px;
+	height: 37px;
+	vertical-align:middle;
+	background: url("../img/phonecall.png") no-repeat 3px 3px;
+	background-color: #FFFFFF;
+}
+.label2{
+	display: inline-block; 
+	position: relative;
+	border-left: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	width: 37px;
+	height: 37px;
+	vertical-align:middle;
+	background: url("../img/privac_open.png") no-repeat 3px 3px;
+	background-color: #FFFFFF;
+}
+.label3{
+	display: inline-block; 
+	position: relative;
+	border-left: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	width: 37px;
+	height: 37px;
+	vertical-align:middle;
+	background: url("../img/privac_open.png") no-repeat 3px 3px;
+	background-color: #FFFFFF;
+}
+.label4{
+	display: inline-block; 
+	position: relative;
+	border-left: 0.2px solid #D2D2D2;
+	border-bottom: 0.2px solid #D2D2D2;
+	border-top: 0.2px solid #D2D2D2;
+	width: 37px;
+	height: 37px;
+	vertical-align:middle;
+	background: url("../img/nickname.png") no-repeat 3px 3px;
+	background-color: #FFFFFF;
+}
+.shejiao{
+	position: relative;
+	left: -78px;
+	top: 23px;
+	color: #666666;
+}
+.qq{
+	display: inline-block;
+	position: relative;
+	width: 30px;
+	height: 30px;
+	top: 30px;
+	left: -75px;
+	background: url("../img/qq.png") no-repeat;
+}
+.wechat{
+	display: inline-block;
+	position: relative;
+	width: 30px;
+	height: 30px;
+	top: 30px;
+	left: -75px;
+	background: url("../img/微信.png") no-repeat;
+}
+.weibo{
+	display: inline-block;
+	position: relative;
+	width: 30px;
+	height: 30px;
+	top: 30px;
+	left: -75px;
+	background: url("../img/微博.png") no-repeat;
+}
+.login{
+	position: relative;
+	text-decoration: none;
+	display: inline-block;
+	color: #029789;
+	top: 22px;
+	left: -35px;
+	cursor: pointer;
+}
+.aaa{
+	margin-left: 110px;
+}
+.div1{
+	margin-top: 20px;
+}
+
+#test1{
+	position: relative;
+	left: -15px;
+	margin-top: 20px;
+	width: 200px;
+}
+#img{
+	display: inline-block;
+}
+#demo1{
+	position: relative;
+	left: 14.5px;
+}

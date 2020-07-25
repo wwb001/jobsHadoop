@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>各省平均薪资</title>
+    <script src="static/js/jquery.js"></script>
+
+    <script src="static/js/echarts.min.js"></script>
+    <link rel="stylesheet"
+          href="static/layui/css/layui.css?t=1545041465480" media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">互联网招聘信息系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href="javascript:;"></a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:;"> <img
+                    src="http://t.cn/RCzsdCq" class="layui-nav-img" id="picpath">
+                贤心
+            </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href=""></a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd><a href="main">招聘信息首页</a></dd>
+                    <a class="" href="javascript:;">各岗位国内需求</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="domesticdemand">各岗位国内需求</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">招聘大数据分析</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="totaldemand">岗位总需求</a>
+                        </dd>
+                        <dd>
+                            <a href="averagesalary">岗位平均薪资</a>
+                        </dd>
+                        <dd>
+                            <a href="pro-averagesalary">省平均薪资</a>
+                        </dd>
+                        <dd>
+                            <a href="hotword">招聘高频词</a>
+                        </dd>
+                        <dd>
+                            <a href="3dSalaryPart">岗位薪资区间数量</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div id="main" style="width: 100%;height:100%;"></div>
+        <script type="text/javascript">
+            var myChart = echarts.init(document.getElementById("main"));
+
+            $.ajax({
+                "url": "getFiveAvSala",
+                "type": "get",
+                "data": {},
+                "dataType": "json",
+                "success": function (datajson1) {
+                    generateChart1(datajson1);
+                }
+            })
+
+            function generateChart1(datajson1) {
+
+                var years = ['人工智能', '前端开发', '游戏开发', '移动开发', '测试'];
+                var jdData = datajson1["province"];
+                var data = datajson1["data"];
+
+                option = {
+
+                    baseOption: {
+                        backgroundColor: '#2c343c', //背景颜色
+                        timeline: {
+                            data: years,
+                            axisType: 'category',
+                            autoPlay: true,
+                            playInterval: 1500, //播放速度
+
+                            left: '5%',
+                            right: '5%',
+                            bottom: '0%',
+                            width: '90%',
+                            //  height: null,
+                            label: {
+                                normal: {
+                                    textStyle: {
+
+                                        color: 'red',
+                                    }
+                                },
+                                emphasis: {
+                                    textStyle: {
+                                        color: 'red'
+                                    }
+                                }
+                            },
+                            symbolSize: 10,
+                            lineStyle: {
+                                color: '#red'
+                            },
+                            checkpointStyle: {
+                                borderColor: '#red',
+                                borderWidth: 2
+                            },
+                            controlStyle: {
+                                showNextBtn: true,
+                                showPrevBtn: true,
+                                normal: {
+                                    color: '#ff8800',
+                                    borderColor: '#ff8800'
+                                },
+                                emphasis: {
+                                    color: 'red',
+                                    borderColor: 'red'
+                                }
+                            },
+
+                        },
+                        title: {
+                            text: '',
+                            right: '2%',
+                            bottom: '8%',
+                            textStyle: {
+                                fontSize: 50,
+                                color: 'pink' //标题字体颜色
+                            }
+                        },
+                        tooltip: {
+                            'trigger': 'axis'
+                        },
+                        calculable: true,
+                        grid: {
+                            left: '8%',
+                            right: '2%',
+                            bottom: '6%',
+                            top: '0%',
+                            containLabel: true
+                        },
+                        label: {
+                            normal: {
+                                textStyle: {
+                                    color: 'red'
+                                }
+                            }
+                        },
+                        yAxis: [{
+
+                            nameGap: 50,
+                            offset: '37',
+                            'type': 'category',
+                            interval: 50,
+                            //inverse: ture,//图表倒叙或者正序排版
+                            data: '',
+                            nameTextStyle: {
+                                color: 'red'
+                            },
+
+
+                            axisLabel: {
+                                //rotate:45,
+                                show: false,
+                                textStyle: {
+                                    fontSize: 32,
+
+                                    color: function (params, Index) { // 标签国家字体颜色
+
+                                        //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
+
+                                        var colorarrays = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                            '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                            '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
+                                        ];
+
+                                        //console.log("111", Index, colorarrays[Index],params); //打印序列
+
+                                        return colorarrays[jdData[0].indexOf(params)];
+                                    },
+
+
+                                }, //rotate:45,
+                                interval: 50
+                            },
+                            axisLine: {
+
+                                lineStyle: {
+                                    color: 'balck' //Y轴颜色
+                                },
+                            },
+                            splitLine: {
+                                show: false,
+                                lineStyle: {
+                                    color: 'balck'
+                                }
+                            },
+
+                        }],
+                        xAxis: [{
+                            'type': 'value',
+                            'name': '',
+
+                            splitNumber: 8, //轴线个数
+                            nameTextStyle: {
+                                color: 'balck'
+                            },
+                            axisLine: {
+                                lineStyle: {
+                                    color: '#ffa597' //X轴颜色
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value} '
+                            },
+                            splitLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: '#fedd8b'
+                                }
+                            },
+                        }],
+                        series: [{
+                            'name': '',
+                            'type': 'bar',
+                            markLine: {
+                                label: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+                                lineStyle: {
+                                    normal: {
+                                        color: 'red',
+                                        width: 3
+                                    }
+                                },
+                            },
+                            label: {
+                                normal: {
+                                    show: true,
+                                    position: 'right', //数值显示在右侧
+                                    formatter: '{c}'
+                                }
+                            },
+                            itemStyle: {
+                                normal: {
+                                    color: function (params) {
+                                        // build a color map as your need.
+                                        //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
+                                        var colorList = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                            '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                            '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
+                                        ];
+                                        // return colorList[params.dataIndex]
+
+                                        console.log("111", params.name); //打印序列
+                                        return colorList[jdData[0].indexOf(params.name)];
+                                    },
+
+                                }
+                            },
+                        },
+
+                            {
+                                'name': '',
+                                'type': 'bar',
+                                markLine: {
+
+
+                                    label: {
+                                        normal: {
+                                            show: false
+                                        }
+                                    },
+                                    lineStyle: {
+
+                                        normal: {
+                                            color: 'red',
+                                            width: 3
+                                        }
+                                    },
+                                },
+                                barWidth: '50%',
+                                barGap: '-100%',
+                                label: {
+                                    normal: {
+                                        show: true,
+                                        fontSize: 16,  //标签国家字体大小
+                                        position: 'left', //数值显示在右侧
+                                        formatter: function (p) {
+                                            return p.name;
+                                        }
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+
+
+                                        color: function (params) {
+                                            // build a color map as your need.
+                                            //color:function(d){return "#"+Math.floor(Math.random()*(256*256*256-1)).toString(16);//随机生成颜色
+                                            var colorList = ['#6bc0fb', '#7fec9d', '#fedd8b', '#ffa597', '#84e4dd', '#749f83',
+                                                '#ca8622', '#bda29a', '#a8d8ea', '#aa96da', '#fcbad3', '#ffffd2',
+                                                '#f38181', '#fce38a', '#eaffd0', '#95e1d3', '#e3fdfd', '#749f83', '#ca8622'
+                                            ];
+                                            // return colorList[params.dataIndex]
+
+                                            // console.log("111", params.name); //打印序列
+                                            return colorList[jdData[0].indexOf(params.name)];
+                                        },
+
+                                    }
+                                },
+                            }
+                        ],
+
+                        animationEasingUpdate: 'quinticInOut',
+                        animationDurationUpdate: 1500, //动画效果
+                    },
+
+                    options: []
+                };
+                for (var n = 0; n < years.length; n++) {
+
+                    var res = [];
+                    //alert(jdData.length);
+                    for (j = 0; j < data[n].length; j++) {
+                        res.push({
+                            name: jdData[n][j],
+                            value: data[n][j]
+                        });
+
+                    }
+
+                    res.sort(function (a, b) {
+                        return b.value - a.value;
+                    }).slice(0, 6);
+
+                    res.sort(function (a, b) {
+                        return a.value - b.value;
+                    });
+
+
+                    var res1 = [];
+                    var res2 = [];
+                    //console.log(res);
+                    for (t = 0; t < res.length; t++) {
+                        res1[t] = res[t].name;
+                        res2[t] = res[t].value;
+                    }
+                    option.options.push({
+                        title: {
+                            text: years[n]
+                        },
+                        yAxis: {
+                            data: res1,
+                        },
+                        series: [{
+                            data: res2
+                        }, {
+                            data: res2
+                        }]
+                    });
+                }
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+
+        </script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="static/layui/layui.all.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

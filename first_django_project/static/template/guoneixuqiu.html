@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>各岗位国内需求</title>
+    {% load static %}
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/echarts.min.js"></script>
+    <!--    <script src="../js/jquery.js"></script>-->
+    <!--    <script src="../js/echarts.min.js"></script>-->
+    <!-- <script src="js/china.js"></script> -->
+    <!--     <script src="js/bmap.js"></script> -->
+    <!-- <script src="http://api.map.baidu.com/api?v=2.0&ak=9cHRnIhY60Pa1SpniMmCcWoCjV4cLdXG"></script> -->
+    <link rel="stylesheet"
+          href="static/layui/css/layui.css?t=1545041465480" media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">互联网招聘信息系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href="javascript:;"></a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:;"> <img
+                    src="http://t.cn/RCzsdCq" class="layui-nav-img" id="picpath">
+                贤心
+            </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href="">基本资料</a>
+                    </dd>
+                    <dd>
+                        <a href="">安全设置</a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href=""></a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd><a href="main">招聘信息首页</a></dd>
+                    <a class="" href="javascript:;">各岗位国内需求</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="domesticdemand">各岗位国内需求</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">招聘大数据分析</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="totaldemand">岗位总需求</a>
+                        </dd>
+                        <dd>
+                            <a href="averagesalary">岗位平均薪资</a>
+                        </dd>
+                        <dd>
+                            <a href="pro-averagesalary">省平均信息</a>
+                        </dd>
+                        <dd>
+                            <a href="hotword">招聘高频词</a>
+                        </dd>
+                        <dd>
+                            <a href="3dSalaryPart">岗位薪资区间数量</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div id="main" style="width: 100%;height:100%;"></div>
+        <script type="text/javascript">
+            $.ajax({
+                "url": "static/json/three.json",
+                "type": "post",
+                "data": {},
+                "dataType": "json",
+                "success": function (datajson) {
+                    generateChart(datajson);
+                }
+            })
+
+            function generateChart(datajson) {
+
+                console.log(datajson);
+                // console.log(datajson["position"].length);
+                // var example = {};
+                // for (var i = 0; i < datajson["position"].length; i++) {
+                //     for(var key in datajson["position"]){
+                //         example[key] = datajson["position"][key];
+                //     }
+                // }
+                // console.log(example);
+
+                // var temp1 = [];
+                //     for (var i = 0; i < datajson["value"].length; i++) {
+                //         var temp2 = {};
+                //         // console.log(datajson["value"][i]);
+                //         for(var key in datajson["value"][i]){
+                //             temp2["name"] = key;
+                //             temp2["value"] = datajson["value"][i][key];
+                //             // console.log(datajson["value"][i][key])
+                //             // console.log(key);
+                //         }
+                //         temp1.push(temp2)
+                //     }
+                //     console.log(temp1);
+                //     console.log(datajson["position"]);
+
+
+                var myChart = echarts.init(document.getElementById("main"));
+                var geoGpsMap = [121.4648, 31.2891];
+                var t = 1;//流入流出控制
+                var r = 1;//右侧流入流出文字控制
+                var geoCoordMap = {
+                    "西藏自治区": [91.11, 29.97],
+                    "宁夏回族自治区": [106.3586, 38.1775],
+                    "青海省": [101.4038, 36.8207],
+                    "新疆维吾尔自治区": [87.9236, 43.5883],
+                    '内蒙古自治区': [110.3467, 41.4899],
+                    "吉林省": [125.8154, 44.2584],
+                    "河北省": [114.4995, 38.1006],
+                    "天津市": [117.4219, 39.4189],
+                    "山西省": [112.3352, 37.9413],
+                    "甘肃省": [103.5901, 36.3043],
+                    "辽宁省": [123.1238, 42.1216],
+                    "重庆市": [108.384366, 30.439702],
+                    "福建省": [119.4543, 25.9222],
+                    "安徽省": [117.29, 32.0581],
+                    '黑龙江省': [127.9688, 45.368],
+                    "湖南省": [113.0823, 28.2568],
+                    "山东省": [117.1582, 36.8701],
+                    "陕西省": [109.1162, 34.2004],
+                    "河南省": [113.4668, 34.6234],
+                    "江西省": [116.0046, 28.6633],
+                    "贵州省": [106.6992, 26.7682],
+                    "云南省": [102.9199, 25.4663],
+                    "广西壮族自治区": [108.479, 23.1152],
+                    "海南省": [110.3893, 19.8516],
+                    "湖北省": [114.3896, 30.6628],
+                    "四川省": [103.9526, 30.7617],
+                    '北京市': [116.4551, 40.2539],
+                    "浙江省": [119.5313, 29.8773],
+                    "江苏省": [118.8062, 31.9208],
+                    '上海市': [121.4648, 31.2891],
+                    "广东省": [113.12244, 23.009505],
+                };
+
+                var d1 = datajson["value1"];
+
+                var d2 = datajson["value2"];
+
+                var d3 = datajson["value3"];
+
+                var d4 = datajson["value4"];
+
+                var d5 = datajson["value5"];
+
+                var colors =
+                    ["#1DE9B6", "#EEDD78", "#32C5E9", "#FFDB5C", "#37A2DA", "#04B9FF"];
+                var colorIndex = 0;
+                $(function () {
+
+                    var year = ["AI", "前端开发", "游戏开发", "移动开发", "测试"];
+                    var mapData = [
+                        [],
+                        [],
+                        [],
+                        [],
+                        [],
+                        [],
+                    ];
+
+                    /*柱子Y名称*/
+                    var categoryData = [];
+                    var barData = [];
+
+                    for (var key in geoCoordMap) {
+                        mapData[0].push({
+                            "year": 'AI',
+                            "name": key,
+                            "value": d1[key] / 10,
+                            "value1": d1[key] / 10,
+                        });
+                        mapData[1].push({
+                            "year": '前端开发',
+                            "name": key,
+                            "value": d2[key] / 10,
+                            "value1": d2[key] / 10,
+                        });
+                        mapData[2].push({
+                            "year": '游戏开发',
+                            "name": key,
+                            "value": d3[key] / 10,
+                            "value1": d3[key] / 10,
+                        });
+                        mapData[3].push({
+                            "year": '移动开发',
+                            "name": key,
+                            "value": d4[key] / 10,
+                            "value1": d4[key] / 10,
+                        });
+                        mapData[4].push({
+                            "year": '测试',
+                            "name": key,
+                            "value": d5[key] / 10,
+                            "value1": d5[key] / 10,
+                        });
+                    }
+
+                    for (var i = 0; i < mapData.length; i++) {
+                        mapData[i].sort(function sortNumber(a, b) {
+                            return a.value - b.value
+                        });
+                        barData.push([]);
+                        categoryData.push([]);
+                        for (var j = 0; j < mapData[i].length; j++) {
+                            barData[i].push(mapData[i][j].value1);
+                            categoryData[i].push(mapData[i][j].name);
+                        }
+                    }
+
+                    $.getJSON("static/json/china.json", function (geoJson) {
+                        $('body').css({
+                            'background': 'url(https://corgixuoos.oss-cn-shanghai.aliyuncs.com/soc/0623%E4%BF%AE%E6%94%B9%E5%A4%A7%E5%B1%8F-%E6%95%B4%E4%BD%93-Recovered.png) repeat-y', //'#2a6d87',
+                            'position': 'fixed',
+                            'top': 0,
+                            'left': 0,
+                            'width': '100%',
+                            'height': '100%',
+                            'background-size': 'cover',
+                            '-webkit-background-size': 'cover',
+                            '-o-background-size': 'cover',
+                            'background-position': 'center 0',
+                            //'writing-mode': 'vertical-rl'
+                        });
+
+                        echarts.registerMap('china', geoJson);
+                        var convertData = function (data) {
+                            var res = [];
+                            for (var i = 0; i < data.length; i++) {
+                                var geoCoord = geoCoordMap[data[i].name];
+                                if (geoCoord) {
+                                    res.push({
+                                        name: data[i].name,
+                                        value: geoCoord.concat(data[i].value)
+                                    });
+                                }
+                            }
+                            return res;
+                        };
+
+                        var convertToLineData = function (data, gps) {
+                            var res = [];
+                            for (var i = 0; i < data.length; i++) {
+                                var dataItem = data[i];
+                                var toCoord = geoCoordMap[dataItem.name];
+                                var fromCoord = gps; //郑州
+                                //  var toCoord = geoGps[Math.random()*3];
+                                if (fromCoord && toCoord) {
+                                    if (t == 1) {
+                                        res.push([{
+                                            coord: toCoord,
+                                        }, {
+                                            coord: fromCoord,
+                                            value: dataItem.value
+                                        }]);
+                                    } else {
+                                        res.push([{
+                                            coord: fromCoord,
+                                            value: dataItem.value
+                                        }, {
+                                            coord: toCoord,
+                                        }]);
+                                    }
+
+                                }
+                            }
+                            if (t == 0) {
+                                t = 1;
+                            } else {
+                                t = 0;
+                            }
+                            return res;
+                        };
+
+                        optionXyMap01 = {
+                            timeline: {
+                                data: year,
+                                axisType: 'category',
+                                autoPlay: true,
+                                playInterval: 5000,
+                                left: '10%',
+                                right: '10%',
+                                bottom: '3%',
+                                width: '80%',
+                                //  height: null,
+                                label: {
+                                    normal: {
+                                        textStyle: {
+                                            color: '#ddd'
+                                        }
+                                    },
+                                    emphasis: {
+                                        textStyle: {
+                                            color: '#fff'
+                                        }
+                                    }
+                                },
+                                symbolSize: 10,
+                                lineStyle: {
+                                    color: '#555'
+                                },
+                                checkpointStyle: {
+                                    borderColor: '#777',
+                                    borderWidth: 2
+                                },
+                                controlStyle: {
+                                    showNextBtn: true,
+                                    showPrevBtn: true,
+                                    normal: {
+                                        color: '#666',
+                                        borderColor: '#666'
+                                    },
+                                    emphasis: {
+                                        color: '#aaa',
+                                        borderColor: '#aaa'
+                                    }
+                                },
+
+                            },
+                            baseOption: {
+
+                                animation: true,
+                                animationDuration: 1000,
+                                animationEasing: 'cubicInOut',
+                                animationDurationUpdate: 1000,
+                                animationEasingUpdate: 'cubicInOut',
+                                grid: {
+                                    right: '2%',
+                                    top: '10%',
+                                    bottom: '10%',
+                                    width: '18%'
+                                },
+                                tooltip: {
+                                    trigger: 'axis', // hover触发器
+                                    axisPointer: { // 坐标轴指示器，坐标轴触发有效
+                                        type: 'shadow', // 默认为直线，可选为：'line' | 'shadow'
+                                        shadowStyle: {
+                                            color: 'rgba(150,150,150,0.1)' //hover颜色
+                                        }
+                                    }
+                                },
+                                visualMap: {
+                                    min: 0,
+                                    max: 250,
+                                    left: 'left',
+                                    top: 'bottom',
+                                    text: ['高', '低'],
+                                    textStyle: {
+                                        color: 'white'
+                                    },
+                                    calculable: true,
+                                    colorLightness: [0.8, 100],
+                                    color: ['#c05050', '#FFCC33', '#5ab1ef'],
+                                    dimension: 0,
+
+                                },
+                                geo: {
+                                    show: true,
+                                    map: 'china',
+                                    roam: true,
+                                    zoom: 1,
+                                    center: [113.83531246, 34.0267395887],
+                                    label: {
+                                        emphasis: {
+                                            show: true
+                                        }
+                                    },
+                                    itemStyle: {
+                                        normal: {
+                                            borderColor: 'rgba(147, 235, 248, 1)',
+                                            borderWidth: 1,
+                                            areaColor: {
+                                                type: 'radial',
+                                                x: 0.5,
+                                                y: 0.5,
+                                                r: 0.8,
+                                                colorStops: [{
+                                                    offset: 0,
+                                                    color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
+                                                }, {
+                                                    offset: 1,
+                                                    color: 'rgba(147, 235, 248, .2)' // 100% 处的颜色
+                                                }],
+                                                globalCoord: false // 缺省为 false
+                                            },
+                                            shadowColor: 'rgba(128, 217, 248, 1)',
+                                            // shadowColor: 'rgba(255, 255, 255, 1)',
+                                            shadowOffsetX: -2,
+                                            shadowOffsetY: 2,
+                                            shadowBlur: 10
+                                        },
+                                        emphasis: {
+                                            areaColor: '#389BB7',
+                                            borderWidth: 0
+                                        }
+                                    }
+                                },
+                            },
+                            options: []
+
+                        };
+
+                        for (var n = 0; n < year.length; n++) {
+                            var statistic_name = "各省" + (r == 1 ? "需求" : "需求") + "数量";
+                            optionXyMap01.options.push({
+
+
+                                title:
+                                    [{
+                                        text: '全国各岗位需求',
+                                        //subtext: '   ',
+                                        left: '25%',
+                                        top: '1%',
+                                        textStyle: {
+                                            color: '#fff',
+                                            fontSize: 25
+                                        }
+                                    },
+                                        {
+                                            id: 'statistic',
+                                            text: statistic_name,
+                                            left: '75%',
+                                            top: '3%',
+                                            textStyle: {
+                                                color: '#fff',
+                                                fontSize: 16
+                                            }
+                                        }
+                                    ],
+                                xAxis: {
+                                    type: 'value',
+                                    scale: true,
+                                    position: 'top',
+                                    min: 0,
+                                    boundaryGap: false,
+                                    splitLine: {
+                                        show: false
+                                    },
+                                    axisLine: {
+                                        show: false
+                                    },
+                                    axisTick: {
+                                        show: false
+                                    },
+                                    axisLabel: {
+                                        margin: 1,
+                                        textStyle: {
+                                            color: '#aaa'
+                                        }
+                                    },
+                                },
+                                yAxis: {
+                                    type: 'category',
+                                    //  name: 'TOP 20',
+                                    nameGap: 16,
+                                    axisLine: {
+                                        show: true,
+                                        lineStyle: {
+                                            color: '#ddd'
+                                        }
+                                    },
+                                    axisTick: {
+                                        show: false,
+                                        lineStyle: {
+                                            color: '#ddd'
+                                        }
+                                    },
+                                    axisLabel: {
+                                        interval: 0,
+                                        textStyle: {
+                                            color: '#ddd'
+                                        }
+                                    },
+                                    data: categoryData[n]
+                                },
+
+                                series: [
+                                    //未知作用
+                                    {
+                                        //文字和标志
+                                        name: 'light',
+                                        type: 'scatter',
+                                        coordinateSystem: 'geo',
+                                        data: convertData(mapData[n]),
+                                        symbolSize: function (val) {
+                                            return 6;
+                                        },
+                                        label: {
+                                            normal: {
+                                                formatter: '{b}',
+                                                position: 'right',
+                                                show: true
+                                            },
+                                            emphasis: {
+                                                show: true
+                                            }
+                                        },
+                                        itemStyle: {
+                                            normal: {
+                                                color: colors[n]
+                                            }
+                                        }
+                                    },
+                                    //地图？
+                                    {
+                                        type: 'map',
+                                        map: 'china',
+                                        geoIndex: 0,
+                                        aspectScale: 1, //长宽比
+                                        showLegendSymbol: false, // 存在legend时显示
+                                        label: {
+                                            normal: {
+                                                show: false
+                                            },
+                                            emphasis: {
+                                                show: false,
+                                                textStyle: {
+                                                    color: '#fff'
+                                                }
+                                            }
+                                        },
+                                        roam: true,
+                                        itemStyle: {
+                                            normal: {
+                                                areaColor: '#031525',
+                                                borderColor: '#FFFFFF',
+                                            },
+                                            emphasis: {
+                                                areaColor: '#2B91B7'
+                                            }
+                                        },
+                                        animation: false,
+                                        data: mapData
+                                    },
+                                    {
+                                        //  name: 'Top 5',
+                                        type: 'effectScatter',
+                                        coordinateSystem: 'geo',
+                                        data: convertData(mapData[n].sort(function (a, b) {
+                                            return b.value - a.value;
+                                        }).slice(0, 20)),
+                                        symbolSize: function (val) {
+                                            return val[2] / 10;
+                                        },
+                                        showEffectOn: 'render',
+                                        rippleEffect: {
+                                            brushType: 'stroke'
+                                        },
+                                        hoverAnimation: true,
+                                        label: {
+                                            normal: {
+                                                formatter: '{b}',
+                                                position: 'right',
+                                                show: true
+                                            }
+                                        },
+                                        itemStyle: {
+                                            normal: {
+                                                color: colors[colorIndex][n],
+                                                shadowBlur: 10,
+                                                shadowColor: colors[colorIndex][n]
+                                            }
+                                        },
+                                        zlevel: 1
+                                    },
+                                    //柱状图
+                                    {
+                                        zlevel: 1.5,
+                                        type: 'bar',
+                                        barMaxWidth: 8,
+                                        symbol: 'none',
+                                        itemStyle: {
+                                            normal: {
+                                                color: colors[n],
+                                                barBorderRadius: [0, 30, 30, 0]
+                                            }
+                                        },
+                                        data: barData[n]
+                                    }
+                                ]
+                            });
+                            if (r == 0) {
+                                r = 1;
+                            } else {
+                                r = 0;
+                            }
+                        }
+                        myChart.setOption(optionXyMap01);
+                    });
+                });
+            }
+        </script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="static/layui/layui.all.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

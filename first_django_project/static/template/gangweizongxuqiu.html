@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>所有岗位总需求</title>
+    {% load static %}
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/echarts.min.js"></script>
+    <link rel="stylesheet"
+          href="static/layui/css/layui.css?t=1545041465480" media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">互联网招聘信息系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href="javascript:;"></a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:;"> <img
+                    src="http://t.cn/RCzsdCq" class="layui-nav-img" id="picpath">
+                贤心
+            </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href=""></a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd><a href="main">招聘信息首页</a></dd>
+                    <a class="" href="javascript:;">各岗位国内需求</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="domesticdemand">各岗位国内需求</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">招聘大数据分析</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="totaldemand">岗位总需求</a>
+                        </dd>
+                        <dd>
+                            <a href="averagesalary">岗位平均薪资</a>
+                        </dd>
+                        <dd>
+                            <a href="pro-averagesalary">省平均信息</a>
+                        </dd>
+                        <dd>
+                            <a href="hotword">招聘高频词</a>
+                        </dd>
+                        <dd>
+                            <a href="3dSalaryPart">岗位薪资区间数量</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div id="main" style="width: 100%;height:100%;"></div>
+        <script type="text/javascript">
+
+            $.ajax({
+                "url": "getNeedNum",
+                "type": "post",
+                "data": {},
+                "dataType": "json",
+                "success": function (datajson1) {
+                    generateChart1(datajson1);
+                    console.log(datajson1);
+                }
+            })
+
+            function generateChart1(datajson1) {
+                var myChart = echarts.init(document.getElementById("main"));
+
+                option = {
+
+                    backgroundColor: '#00265f',
+                    "title": {
+                        "text": "岗位总需求",
+                        x: "center",
+                        y: "4%",
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: '22'
+                        },
+                        subtextStyle: {
+                            color: '#90979c',
+                            fontSize: '16',
+
+                        },
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    tooltip: {},
+                    grid: {
+                        top: '15%',
+                        right: '3%',
+                        left: '5%',
+                        bottom: '12%'
+                    },
+                    xAxis: [{
+                        type: 'category',
+                        data: datajson1["job"],
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,0.12)'
+                            }
+                        },
+                        axisLabel: {
+                            margin: 10,
+                            color: '#e2e9ff',
+                            textStyle: {
+                                fontSize: 14
+                            },
+                        },
+                    }],
+                    yAxis: [{
+                        name: '单位：个',
+                        axisLabel: {
+                            formatter: '{value}',
+                            color: '#e2e9ff',
+                        },
+                        axisLine: {
+                            show: false,
+                            lineStyle: {
+                                color: 'rgba(255,255,255,1)'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: 'rgba(255,255,255,0.12)'
+                            }
+                        }
+                    }],
+
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '38%',
+                            center: ['75%', '25%'],
+//          data:['衬衫','羊毛衫','雪纺衫','裤子','高跟鞋','袜子']
+//          data: [5, 20, 36, 10, 10, 20]
+
+                            data: datajson1["pie"],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        },
+                        {
+                            type: 'bar',
+                            data: datajson1["data"],
+                            barWidth: '20px',
+                            itemStyle: {
+                                normal: {
+                                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                        offset: 0,
+                                        color: 'rgba(0,244,255,1)' // 0% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: 'rgba(0,77,167,1)' // 100% 处的颜色
+                                    }], false),
+                                    barBorderRadius: [30, 30, 30, 30],
+                                    shadowColor: 'rgba(0,160,221,1)',
+                                    shadowBlur: 4,
+                                }
+                            },
+                            label: {
+                                normal: {
+                                    show: true,
+                                    lineHeight: 30,
+                                    width: 80,
+                                    height: 30,
+                                    backgroundColor: 'rgba(0,160,221,0.1)',
+                                    borderRadius: 200,
+                                    position: ['-8', '-60'],
+                                    distance: 1,
+                                    formatter: [
+                                        '    {d|●}',
+                                        ' {a|{c}}     \n',
+                                        '    {b|}'
+                                    ].join(','),
+                                    rich: {
+                                        d: {
+                                            color: '#3CDDCF',
+                                        },
+                                        a: {
+                                            color: '#fff',
+                                            align: 'center',
+                                        },
+                                        b: {
+                                            width: 1,
+                                            height: 30,
+                                            borderWidth: 1,
+                                            borderColor: '#234e6c',
+                                            align: 'left'
+                                        },
+                                    }
+                                }
+                            }
+                        }]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+
+        </script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="static/layui/layui.all.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

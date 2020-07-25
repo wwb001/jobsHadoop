@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d205e9df-6898-4768-8c94-c260c7070ba7" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="ProjectId" id="1eyX2FRQrdRk6Pnm2uWOUxYbH1R" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\25071\Desktop\first_django_project\first_django_project\static\json" />
+      <recent name="C:\Users\25071\Desktop\first_django_project\first_django_project\static\js" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d205e9df-6898-4768-8c94-c260c7070ba7" name="Default Changelist" comment="" />
+      <created>1595294597464</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1595294597464</updated>
+      <workItem from="1595294615127" duration="8646000" />
+      <workItem from="1595319272921" duration="6175000" />
+      <workItem from="1595331245133" duration="1706000" />
+      <workItem from="1595339456872" duration="3745000" />
+      <workItem from="1595378883482" duration="2674000" />
+      <workItem from="1595383035426" duration="45000" />
+      <workItem from="1595387192014" duration="799000" />
+      <workItem from="1595391376544" duration="147000" />
+      <workItem from="1595393678926" duration="128000" />
+      <workItem from="1595396926238" duration="184000" />
+      <workItem from="1595399686698" duration="6192000" />
+      <workItem from="1595465977667" duration="857000" />
+      <workItem from="1595467451426" duration="1885000" />
+      <workItem from="1595471572396" duration="706000" />
+      <workItem from="1595495464862" duration="1965000" />
+      <workItem from="1595508889609" duration="1309000" />
+      <workItem from="1595510725374" duration="704000" />
+      <workItem from="1595512877923" duration="1980000" />
+      <workItem from="1595551251787" duration="2065000" />
+      <workItem from="1595660324247" duration="631000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595294936830">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1595294936830" />
+    <state x="447" y="145" width="642" height="534" key="find.popup" timestamp="1595297417929">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="447" y="145" width="642" height="534" key="find.popup/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1595297417929" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1595298956096">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1595298956096" />
+  </component>
+</project>

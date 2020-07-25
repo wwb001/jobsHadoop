@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>各岗位平均薪资</title>
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/echarts.min.js"></script>
+    <link rel="stylesheet"
+          href="static/layui/css/layui.css?t=1545041465480" media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">互联网招聘信息系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href="javascript:;"></a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:;"> <img
+                    src="http://t.cn/RCzsdCq" class="layui-nav-img" id="picpath">
+                贤心
+            </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href=""></a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd><a href="main">招聘信息首页</a></dd>
+                    <a class="" href="javascript:;">各岗位国内需求</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="domesticdemand">各岗位国内需求</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">招聘大数据分析</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="totaldemand">岗位总需求</a>
+                        </dd>
+                        <dd>
+                            <a href="averagesalary">岗位平均薪资</a>
+                        </dd>
+                        <dd>
+                            <a href="pro-averagesalary">省平均信息</a>
+                        </dd>
+                        <dd>
+                            <a href="hotword">招聘高频词</a>
+                        </dd>
+                        <dd>
+                            <a href="3dSalaryPart">岗位薪资区间数量</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div id="main" style="width: 100%;height:100%;"></div>
+        <script type="text/javascript">
+
+            $.ajax({
+                "url": "getAvSala",
+                "type": "post",
+                "data": {},
+                "dataType": "json",
+                "success": function (datajson1) {
+                    generateChart1(datajson1);
+                    console.log(datajson1);
+                }
+            })
+
+            function generateChart1(datajson1) {
+                var myChart = echarts.init(document.getElementById("main"));
+
+                var legend = datajson1["job"];
+
+                var data = datajson1["data"];
+
+                option = {
+                    backgroundColor: '#05274C',
+                    color: ['#2AC9FD', '#76FBC0', '#35C96E', '#FCC708', '#48B188', '#5957C2', '#4A5D73'],
+                    tooltip: { //提示框
+                        trigger: "item",
+                        triggerOn: "mousemove",
+                        backgroundColor: "rgba(1,70,86,1)",
+                        borderColor: "rgba(0,246,255,1)",
+                        borderWidth: 0.5,
+                        textStyle: {
+                            fontSize: 18
+                        }
+                    },
+                    title: [{
+
+                        subtext: '各岗位平均薪资 k/月',
+
+                        subtextStyle: {
+                            fontSize: 27,
+                            color: '#fff'
+                        },
+                        textAlign: "center",
+                        x: '50%',
+                        y: '47%',
+                    }],
+                    series: [{
+                        color: ['#2AC9FD', '#76FBC0', '#35C96E', '#FCC708', '#48B188', '#5957C2'],
+                        type: 'pie',
+                        radius: ['210', '130'],
+                        labelLine: {
+                            normal: {
+                                length: 170,
+                                length2: 200,
+                                lineStyle: {
+                                    type: 'solid'
+                                }
+                            }
+                        },
+                        label: {
+                            normal: {
+                                formatter: (params) => {
+                                    // console.log(params);
+                                    return '{b| ' + params.name + '}  ' + '{c|' + params.percent.toFixed(0) + '%}'
+                                },
+                                borderWidth: 0,
+                                borderRadius: 4,
+                                padding: [0, -86],
+                                height: 70,
+                                fontSize: 20,
+                                align: 'center',
+                                color: '#3494BD',
+                                rich: {
+                                    b: {
+                                        fontSize: 24,
+                                        lineHeight: 26,
+                                        color: '#41B3DC',
+                                        padding: [0, 0, 5, 0]
+                                    },
+                                    c: {
+                                        fontSize: 40,
+                                        lineHeight: 20,
+                                        color: 'orange'
+                                    }
+
+                                }
+                            }
+                        },
+                        data: data,
+                    },
+                        {
+                            type: 'pie',
+                            radius: ['50', '51'],
+                            data: [100],
+                            label: {
+                                show: false
+                            }
+                        }
+                    ]
+                };
+
+
+                // 使用刚指定的配置项和数据显示图表。
+                myChart.setOption(option);
+            }
+
+        </script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="static/layui/layui.all.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

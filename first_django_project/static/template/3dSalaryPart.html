@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>岗位薪资区间数量</title>
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/echarts.min.js"></script>
+    <!-- 必须先引入china.js 这个文件 因为中国地图需要 -->
+    <script src="https://echarts.baidu.com/dist/echarts-gl.min.js"></script>
+    <link rel="stylesheet" href="static/layui/css/layui.css?t=1545041465480" media="all">
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">互联网招聘信息系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href="javascript:;"></a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:;"> <img
+                    src="http://t.cn/RCzsdCq" class="layui-nav-img" id="picpath">
+                贤心
+            </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href=""></a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd><a href="main">招聘信息首页</a></dd>
+                    <a class="" href="javascript:;">各岗位国内需求</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="domesticdemand">各岗位国内需求</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">招聘大数据分析</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="totaldemand">岗位总需求</a>
+                        </dd>
+                        <dd>
+                            <a href="averagesalary">岗位平均薪资</a>
+                        </dd>
+                        <dd>
+                            <a href="pro-averagesalary">省平均信息</a>
+                        </dd>
+                        <dd>
+                            <a href="hotword">招聘高频词</a>
+                        </dd>
+                        <dd>
+                            <a href="3dSalaryPart">岗位薪资区间数量</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <div id="main" style="width: 100%;height:100%;"></div>
+        <script type="text/javascript">
+            <
+            script
+            type = "text/javascript"
+            src = "https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js" ></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat/dist/ecStat.min.js"></script>
+        <script type="text/javascript"
+                src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/dataTool.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/map/js/world.js"></script>
+        <script type="text/javascript"
+                src="https://api.map.baidu.com/api?v=2.0&ak=QwQ33GQFCwyOf7pgPBOruI1AAoOT2hfE&__ec_v__=20190126"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts/dist/extension/bmap.min.js"></script>
+        <script type="text/javascript">
+            var dom = document.getElementById("main");
+            var myChart = echarts.init(dom);
+            var app = {};
+            option = null;
+            var hours = ['前端开发', '后端开发', '数据', '产品', '运维', '人工智能', '设计', '游戏'];
+            var days =
+                ['0-3k', '3k-6k', '6k-9k', '9k-12k', '12k-16k', '16k-20k', '>20k'];
+
+            var data = [
+                [0, 0, 2190], [1, 0, 3124], [2, 0, 15941], [3, 0, 11570], [4, 0, 4039], [5, 0, 1307], [6, 0, 495],
+                [0, 1, 19431], [1, 1, 8746], [2, 1, 12354], [3, 1, 12624], [4, 1, 3176], [5, 1, 2045], [6, 1, 375],
+                [0, 2, 10032], [1, 2, 7749], [2, 2, 3796], [3, 2, 12973], [4, 2, 5172], [5, 2, 3502], [6, 2, 324],
+                [0, 3, 8530], [1, 3, 4862], [2, 3, 3864], [3, 3, 12523], [4, 3, 5113], [5, 3, 1609], [6, 3, 181],
+                [0, 4, 4539], [1, 4, 4539], [2, 4, 9920], [3, 4, 11203], [4, 4, 6506], [5, 4, 790], [6, 4, 211],
+                [0, 5, 5970], [1, 5, 9764], [2, 5, 5752], [3, 5, 12297], [4, 5, 2491], [5, 5, 3902], [6, 5, 126],
+                [0, 6, 3685], [1, 6, 5370], [2, 6, 6892], [3, 6, 10097], [4, 6, 3592], [5, 6, 1507], [6, 6, 190]
+            ];
+            option = {
+                backgroundColor: '#777777',
+                tooltip: {},
+                visualMap: {
+                    max: 12000,
+                    inRange: {
+                        color: ['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+                    }
+                },
+                xAxis3D: {
+                    type: 'category',
+                    data: hours
+                },
+                yAxis3D: {
+                    type: 'category',
+                    data: days
+                },
+                zAxis3D: {
+                    type: 'value'
+                },
+                grid3D: {
+                    boxWidth: 200,
+                    boxDepth: 80,
+                    viewControl: {
+                        // projection: 'orthographic'
+                    },
+                    light: {
+                        main: {
+                            intensity: 1.2,
+                            shadow: true
+                        },
+                        ambient: {
+                            intensity: 0.3
+                        }
+                    }
+                },
+                series: [{
+                    type: 'bar3D',
+                    data: data.map(function (item) {
+                        return {
+                            value: [item[1], item[0], item[2]],
+                        }
+                    }),
+                    shading: 'lambert',
+
+                    label: {
+                        textStyle: {
+                            fontSize: 16,
+                            borderWidth: 1
+                        }
+                    },
+
+                    emphasis: {
+                        label: {
+                            textStyle: {
+                                fontSize: 20,
+                                color: '#900'
+                            }
+                        },
+                        itemStyle: {
+                            color: '#900'
+                        }
+                    }
+                }]
+            }
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            ;
+            if (option && typeof option === "object") {
+                myChart.setOption(option, true);
+            }
+
+        </script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="static/layui/layui.all.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>

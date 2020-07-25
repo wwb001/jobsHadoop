@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>招聘信息大数据可视化首页</title>
+    {% load static %}
+    <script src="static/js/jquery.js"></script>
+    <script src="static/js/echarts.min.js"></script>
+    <!-- 必须先引入china.js 这个文件 因为中国地图需要 -->
+    <script src="static/js/china.js"></script>
+    <script src="static/js/echarts-gl.min.js"></script>
+    <link rel="stylesheet" href="static/layui/css/layui.css?t=1545041465480" media="all">
+    <link rel="stylesheet" href="static/css/index.css"/>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">互联网招聘信息系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href=""></a></li>
+            <li class="layui-nav-item"><a href="javascript:;"></a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:;"> <img
+                    src="http://t.cn/RCzsdCq" class="layui-nav-img" id="picpath">
+                贤心
+            </a>
+                <dl class="layui-nav-child">
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                    <dd>
+                        <a href=""></a>
+                    </dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href=""></a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <dd><a href="main">招聘信息首页</a></dd>
+                    <a class="" href="javascript:;">各岗位国内需求</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="domesticdemand">各岗位国内需求</a>
+                        </dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;">招聘大数据分析</a>
+                    <dl class="layui-nav-child">
+                        <dd>
+                            <a href="totaldemand">岗位总需求</a>
+                        </dd>
+                        <dd>
+                            <a href="averagesalary">岗位平均薪资</a>
+                        </dd>
+                        <dd>
+                            <a href="pro-averagesalary">省平均信息</a>
+                        </dd>
+                        <dd>
+                            <a href="hotword">招聘高频词</a>
+                        </dd>
+                        <dd>
+                            <a href="3dSalaryPart">岗位薪资区间数量</a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 头部的盒子 -->
+        <header>
+            <h1>互联网招聘信息大数据可视化首页</h1>
+            <div class="showTime"></div>
+            <script>
+                var t = null;
+                t = setTimeout(time, 1000); //開始运行
+                function time() {
+                    clearTimeout(t); //清除定时器
+                    dt = new Date();
+                    var y = dt.getFullYear();
+                    var mt = dt.getMonth() + 1;
+                    var day = dt.getDate();
+                    var h = dt.getHours(); //获取时
+                    var m = dt.getMinutes(); //获取分
+                    var s = dt.getSeconds(); //获取秒
+                    document.querySelector(".showTime").innerHTML =
+                        "当前时间：" +
+                        y +
+                        "年" +
+                        mt +
+                        "月" +
+                        day +
+                        "-" +
+                        h +
+                        "时" +
+                        m +
+                        "分" +
+                        s +
+                        "秒";
+                    t = setTimeout(time, 1000); //设定定时器，循环运行
+                }
+            </script>
+            &
+        </header>
+        <!-- 页面主体部分 -->
+        <section class="mainbox">
+            <div class="column">
+                <div class="panel bar">
+                    <h2>热门岗位</h2>
+                    <div class="chart"></div>
+                    <div class="panel-footer"></div>
+                </div>
+                <div class="panel line" style="margin-top: 100px;">
+                    <h2>
+                        薪资分布情况 <a href="javacript:;"></a
+                    >
+                    </h2>
+                    <div class="chart">图表</div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+            <div class="column">
+                <!-- no模块制作 -->
+                <div class="no">
+                    <div class="no-hd">
+                        <ul>
+                            <li>125811</li>
+                            <li>100000</li>
+                        </ul>
+                    </div>
+                    <div class="no-bd">
+                        <ul>
+                            <li>前端需求人数</li>
+                            <li>市场供应人数</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- 地图模块 -->
+                <div class="map">
+                    <div class="map1"></div>
+                    <div class="map2"></div>
+                    <div class="map3"></div>
+                    <div class="chart"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="panel bar2">
+                    <h2>岗位最高薪资 k/月</h2>
+                    <div class="chart">图表</div>
+                    <div class="panel-footer"></div>
+                </div>
+                <div class="panel pie2" style="margin-top: 100px;">
+                    <h2>热门省市</h2>
+                    <div class="chart">图表</div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </section>
+        <script src="static/js/flexible.js"></script>
+
+
+        <script src="static/js/index.js"></script>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+<script src="static/layui/layui.all.js"></script>
+<script>
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+    });
+</script>
+</body>
+</html>
